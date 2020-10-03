@@ -1,0 +1,22 @@
+{
+    "name": "INE20CRSF",
+    "service": "workspace",
+    "containerUser": "vscode",
+    "remoteUser": "vscode",
+    "shutdownAction": "stopCompose",
+    "workspaceFolder": "/laravel",
+    "dockerComposeFile": "docker-compose.yml",
+    "settings": {
+        "phpSniffer.executablesFolder": "./vendor/bin/",
+        "phpSniffer.run": "onSave",
+        "terminal.integrated.shell.linux": "/bin/zsh"
+    },
+    "extensions": [
+        "wongjn.php-sniffer",
+        "bmewburn.vscode-intelephense-client",
+        "onecentlin.laravel-blade",
+        "redhat.vscode-yaml",
+        "mikestead.dotenv",
+        "editorconfig.editorconfig"
+    ]
+}
