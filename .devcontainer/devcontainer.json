@@ -6,17 +6,21 @@
     "shutdownAction": "stopCompose",
     "workspaceFolder": "/laravel",
     "dockerComposeFile": "docker-compose.yml",
+    "remoteEnv": {
+        "PATH": "${containerEnv:PATH}:/home/vscode/.composer/vendor/bin"
+    },
     "settings": {
-        "phpSniffer.executablesFolder": "./vendor/bin/",
-        "phpSniffer.run": "onSave",
-        "terminal.integrated.shell.linux": "/bin/zsh"
+        "terminal.integrated.shell.linux": "/bin/zsh",
+        "phpcs.enable": true,
+        "phpcs.standard": "PSR2",
+        "blade.format.enable": true
     },
     "extensions": [
-        "wongjn.php-sniffer",
+        "ikappas.phpcs",
         "bmewburn.vscode-intelephense-client",
         "onecentlin.laravel-blade",
         "redhat.vscode-yaml",
         "mikestead.dotenv",
-        "editorconfig.editorconfig"
+        "editorconfig.editorconfig",
     ]
 }

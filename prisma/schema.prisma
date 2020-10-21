@@ -1,0 +1,165 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+    provider = "sqlite"
+    url      = "file:./dev.db"
+}
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+model User {
+    id        Int       @id @default(autoincrement())
+    email     String    @unique
+    name      String
+    lastName  String
+    addresses Address[]
+    orders    Order[]
+    reviews   Review[]
+    cart      Cart
+}
+
+model AddressType {
+    id      Int       @id @default(autoincrement())
+    name    String
+    Address Address[]
+}
+
+model Address {
+    id            Int         @id @default(autoincrement())
+    name          String
+    lastName      String
+    street        String
+    city          String
+    province      String
+    postalCode    String
+    country       String
+    phoneNumber   String
+    type          AddressType @relation(fields: [addressTypeId], references: [id])
+    addressTypeId Int
+    user          User?       @relation(fields: [userId], references: [id])
+    userId        Int?
+    shippings     Order[]
+}
+
+model Image {
+    id        Int     @id @default(autoincrement())
+    url       String
+    product   Product @relation(fields: [productId], references: [id])
+    productId Int
+}
+
+model Product {
+    id          Int       @id @default(autoincrement())
+    title       String
+    description String
+    brand       Brand     @relation(fields: [brandId], references: [id])
+    brandId     Int
+    images      Image[]
+    category    Category  @relation(fields: [categoryId], references: [id])
+    categoryId  Int
+    variants    Variant[]
+    reviews     Review[]
+}
+
+model Review {
+    id        Int     @id @default(autoincrement())
+    product   Product @relation(fields: [productId], references: [id])
+    productId Int
+    user      User    @relation(fields: [userId], references: [id])
+    userId    Int
+    comment   String
+    rating    Int
+}
+
+model Category {
+    id       Int       @id @default(autoincrement())
+    name     String
+    products Product[]
+}
+
+model Brand {
+    id       Int       @id @default(autoincrement())
+    name     String
+    products Product[]
+}
+
+model Variant {
+    id        Int         @id @default(autoincrement())
+    price     Float
+    quantity  Int
+    stock     Int
+    color     String
+    size      Size        @relation(fields: [sizeId], references: [id])
+    sizeId    Int
+    product   Product     @relation(fields: [productId], references: [id])
+    productId Int
+    orderItem OrderItem[]
+    cartItems CartItem[]
+}
+
+model Size {
+    id      Int       @id @default(autoincrement())
+    name    String
+    Variant Variant[]
+}
+
+model OrderItem {
+    id        Int     @id @default(autoincrement())
+    price     Float
+    quantity  Int
+    variant   Variant @relation(fields: [variantId], references: [id])
+    variantId Int
+    order     Order   @relation(fields: [orderId], references: [id])
+    orderId   Int
+}
+
+model Status {
+    id    Int     @id @default(autoincrement())
+    name  String
+    Order Order[]
+}
+
+model Shipper {
+    id     Int     @id @default(autoincrement())
+    name   String
+    orders Order[]
+}
+
+model CartItem {
+    id        Int     @id @default(autoincrement())
+    variant   Variant @relation(fields: [variantId], references: [id])
+    variantId Int
+    cart      Cart    @relation(fields: [cartId], references: [id])
+    cartId    Int
+}
+
+model Cart {
+    id     Int        @id @default(autoincrement())
+    user   User       @relation(fields: [userId], references: [id])
+    userId Int
+    items  CartItem[]
+}
+
+model Order {
+    id                Int         @id @default(autoincrement())
+    quantity          Int
+    payment           String
+    shippingRate      Float
+    salesTaxRate      Float
+    tax               Float
+    discount          Float?
+    total             Float
+    date              DateTime
+    shipper           Shipper     @relation(fields: [shipperId], references: [id])
+    status            Status      @relation(fields: [statusId], references: [id])
+    statusId          Int
+    shippingAddress   Address     @relation(fields: [shippingAddressId], references: [id])
+    shippingAddressId Int
+    buyer             User        @relation(fields: [userId], references: [id])
+    userId            Int
+    items             OrderItem[]
+    shipperId         Int
+}

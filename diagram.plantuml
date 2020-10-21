@@ -1,0 +1,104 @@
+@startuml
+skinparam linetype ortho
+
+entity User {
+  * email: String
+  * name: String
+  * lastName: String
+}
+
+entity AddressType {
+  * name: String
+}
+
+entity Address {
+  * street: String
+  * city: String
+  * province: String
+  * postalCode: String
+  * country: String
+  * phoneNumber: String
+}
+
+entity Image {
+  * url: String
+}
+
+entity Product {
+  * title: String
+  * description: String
+}
+
+entity Review {
+  * comment: String
+  * rating: Int
+}
+
+entity Category {
+  * name: String
+}
+
+entity Brand {
+  * name: String
+}
+
+entity Variant {
+  * price: Float
+  * quantity: Int
+  * stock: Int
+  * color: String
+}
+
+entity Size {
+  * name: String
+}
+
+entity OrderItem {
+  * price: Float
+  * quantity: Int
+}
+
+entity Status {
+  * name: String
+}
+
+entity Shipper {
+  * name: String
+}
+
+entity CartItem {
+  * quantity: Int
+}
+
+entity Cart {
+}
+
+entity Order {
+  * quantity: Int
+  * payment: String
+  * shippingRate: Float
+  * salesTaxRate: Float
+  * tax: Float
+  * discount: Float?
+  * total: Float
+  * date: DateTime
+}
+
+User |o..o{ Address
+User ||..o{ Review
+User ||..|| Cart
+User ||..o{ Order
+Cart ||..o{ CartItem
+AddressType ||..o{ Address
+Product }o..|| Category
+Product }o..|| Brand
+Product ||..o{ Variant
+Product ||..o{ Image
+Product ||..o{ Review
+Variant }o..|| Size
+Variant ||..|| OrderItem
+Status ||..o{ Order
+Shipper ||..o{ Order
+Variant ||..|| CartItem
+Order ||..o{ OrderItem
+@enduml

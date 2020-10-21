@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   workspace:
-    build: services/workspace
+    image: kcr.intl.krosf.com/devcontainers:php7.4-workspace-laravel
     environment:
       COMPOSER_MEMORY_LIMIT: -1
     volumes:
@@ -10,16 +10,17 @@ services:
       - ~/.ssh:/home/vscode/.ssh:ro
       - vscode:/home/vscode/.vscode-server
       - composer:/home/vscode/.composer
+      - /Users/krosf/.zsh_history:/home/vscode/.zhistory
 
   php-fpm:
-    build: services/php-fpm
+    image: kcr.intl.krosf.com/php:7.4-fpm-alpine-laravel
     volumes:
       - ..:/laravel
     depends_on:
       - workspace
 
-  nginx:
-    build: services/nginx
+  ine:
+    image: kcr.intl.krosf.com/nginx:1.17-php-laravel
     depends_on:
       - php-fpm
     volumes:
@@ -29,57 +30,12 @@ services:
     labels:
       traefik.enable: "true"
       traefik.http.routers.nginx.entrypoints: web
-      traefik.http.routers.nginx.rule: Host(`ine.localtest.me`)
-
-  mysql:
-    image: mysql:latest
-    command: --default-authentication-plugin=mysql_native_password
-    environment:
-      - MYSQL_PASSWORD=laravel
-      - MYSQL_ROOT_PASSWORD=laravel
-      - MYSQL_USER=laravel
-      - MYSQL_DATABASE=laravel
-    expose:
-      - 3306
-    volumes:
-      - mysql:/var/lib/mysql
-
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin:latest
-    environment:
-      PMA_HOST: mysql
-      PMA_PORT: 3306
-      PMA_USER: laravel
-      PMA_PASSWORD: laravel
-    expose:
-      - 80
-    labels:
-      traefik.enable: "true"
-      traefik.http.routers.phpmyadmin.entrypoints: web
-      traefik.http.routers.phpmyadmin.rule: Host(`phpmyadmin.localtest.me`)
-
-  traefik:
-    image: traefik:latest
-    command:
-      - --api=true
-      - --api.dashboard=true
-      - --log=true
-      - --log.level=INFO
-      - --entrypoints.web.address=:80
-      - --providers.docker=true
-      - --providers.docker.exposedbydefault=false
-    ports:
-      - 80:80
-      - 443:443
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-    labels:
-      traefik.enable: "true"
-      traefik.http.routers.dashboard.service: api@internal
-      traefik.http.routers.dashboard.entrypoints: web
-      traefik.http.routers.dashboard.rule: Host(`traefik.localtest.me`)
 
 volumes:
   composer:
   vscode:
-  mysql:
+
+networks:
+  default:
+    external:
+      name: traefik

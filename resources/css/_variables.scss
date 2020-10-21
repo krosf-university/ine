@@ -1,0 +1,19 @@
+$primary: #110e0d;
+$gray: #a8a6a7;
+$light: #eceaee;
+$utilities: (
+    "height": (
+        property: height,
+        class: h,
+        values: (
+            5: 5%,
+            25: 25%,
+            30: 30%,
+            40: 40%,
+            50: 50%,
+            75: 75%,
+            100: 100%,
+            auto: auto,
+        ),
+    ),
+);
