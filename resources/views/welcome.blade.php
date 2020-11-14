@@ -1,9 +1,26 @@
-@extends('layouts.app')
+@extends('masters.welcome')
 @section('title', 'Dropship')
 @section('content')
     <div class="d-flex flex-column flex-grow-1 flex-shrink-1 px-4">
-        <div class="w-100 h-40 banner" style="border-radius: 3rem">
-            <h1>40% off</h1>
+        <div class="row row-cols-1 row-cols-md-3">
+            @foreach ($aProduct_offering as $product)
+                <div class="col">
+                    <div class="card product">
+                        <img src="{{ $product->imgurl }}" class="card-img-top">
+                        <div class="card-body pl-0">
+                            @if ($product->hasDiscount())
+                                <h5 class="card-title d-flex justify-content-between">
+                                    <span>{{ $product->price }}€</span>
+                                    <span>-{{ $product->discountPercent }}%</span>
+                                </h5>
+                            @else
+                                <h5 class="card-title">{{ $product->price }}€</h5>
+                            @endif
+                            <h6 class="card-subtitle mb-2 text-muted">{{ $product->name }}</h6>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
         </div>
         <div class="flex-grow-1 flex-shrink-1 d-flex justify-content-between align-items-center">
             <button type="button" class="btn-brand"><span>Adidas</span></button>
@@ -19,50 +36,24 @@
                 </svg></button>
         </div>
         <div class="row row-cols-1 row-cols-md-4">
-            <div class="col">
-                <div class="card product">
-                    <img src="https://img.hollisterco.com/is/image/anf/KIC_324-2411-0296-502_prod1?$product-large-hol$"
-                        class="card-img-top">
-                    <div class="card-body pl-0">
-                        <h5 class="card-title">20€</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Crewneck T-Shirt</h6>
+            @foreach ($aProduct_new as $product)
+                <div class="col">
+                    <div class="card product">
+                        <img src="{{ $product->imgurl }}" class="card-img-top">
+                        <div class="card-body pl-0">
+                            @if ($product->hasDiscount())
+                                <h5 class="card-title d-flex justify-content-between">
+                                    <span>{{ $product->price }}€</span>
+                                    <span>-{{ $product->discountPercent }}%</span>
+                                </h5>
+                            @else
+                                <h5 class="card-title">{{ $product->price }}€</h5>
+                            @endif
+                            <h6 class="card-subtitle mb-2 text-muted">{{ $product->name }}</h6>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="col">
-                <div class="card product">
-                    <img src="https://img.hollisterco.com/is/image/anf/KIC_324-2410-0400-208_prod1?$product-large-hol$"
-                        class="card-img-top">
-                    <div class="card-body pl-0">
-                        <h5 class="card-title">20€</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Crewneck T-Shirt</h6>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="card product">
-                    <img src="https://img.hollisterco.com/is/image/anf/KIC_324-2408-0425-108_prod1?$product-large-hol$"
-                        class="card-img-top">
-                    <div class="card-body pl-0">
-                        <h5 class="card-title">20€</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Crewneck T-Shirt</h6>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="card product">
-                    <img src="https://img.hollisterco.com/is/image/anf/KIC_324-2408-0425-918_prod1?$product-large-hol$"
-                        class="card-img-top">
-                    <div class="card-body pl-0">
-                        <h5 class="card-title">20€</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Crewneck T-Shirt</h6>
-                    </div>
-                </div>
-            </div>
-
+            @endforeach
         </div>
     </div>
     <div class="d-flex flex-column flex-grow-0 flex-shrink-0 w-25 pl-4">

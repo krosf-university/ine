@@ -1,0 +1,8 @@
+captura.png
+product.sql
+public/*
+app/Models/Product.php
+app/Http/Controllers/ProductController.php
+database/migrations/2020_11_13_212412_create_products_table.php
+routes/web.php
+resources/views/*

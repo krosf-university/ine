@@ -16,6 +16,7 @@
         "laravel/tinker": "^2.0"
     },
     "require-dev": {
+        "barryvdh/laravel-ide-helper": "^2.8",
         "brainmaestro/composer-git-hooks": "^2.8",
         "facade/ignition": "^2.3.6",
         "fzaninotto/faker": "^1.9.1",
@@ -31,7 +32,9 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": []
+            "dont-discover": [
+                "barryvdh/laravel-ide-helper"
+            ]
         },
         "hooks": {
             "pre-commit": [
