@@ -6,7 +6,7 @@
             @foreach ($aProduct_offering as $product)
                 <div class="col">
                     <div class="card product">
-                        <img src="{{ $product->imgurl }}" class="card-img-top">
+                        <img src="/{{ $product->imgurl }}" class="card-img-top">
                         <div class="card-body pl-0">
                             @if ($product->hasDiscount())
                                 <h5 class="card-title d-flex justify-content-between">
@@ -16,7 +16,9 @@
                             @else
                                 <h5 class="card-title">{{ $product->price }}€</h5>
                             @endif
-                            <h6 class="card-subtitle mb-2 text-muted">{{ $product->name }}</h6>
+                            <a href="{{ route('product', ['product' => $product], false) }}">
+                                <h6 class="card-subtitle mb-2 text-muted">{{ $product->name }}</h6>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -39,7 +41,7 @@
             @foreach ($aProduct_new as $product)
                 <div class="col">
                     <div class="card product">
-                        <img src="{{ $product->imgurl }}" class="card-img-top">
+                        <img src="/{{ $product->imgurl }}" class="card-img-top">
                         <div class="card-body pl-0">
                             @if ($product->hasDiscount())
                                 <h5 class="card-title d-flex justify-content-between">
@@ -49,7 +51,9 @@
                             @else
                                 <h5 class="card-title">{{ $product->price }}€</h5>
                             @endif
-                            <h6 class="card-subtitle mb-2 text-muted">{{ $product->name }}</h6>
+                            <a href="{{ route('product', ['product' => $product], false) }}">
+                                <h6 class="card-subtitle mb-2 text-muted">{{ $product->name }}</h6>
+                            </a>
                         </div>
                     </div>
                 </div>

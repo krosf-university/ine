@@ -3,7 +3,7 @@
         <div class="d-flex w-100 align-items-center">
             <div class="d-flex flex-grow-1 flex-shrink-1 align-items-center justify-content-between px-4">
                 <div class="d-flex">
-                    <a href="http://" target="_blank" rel="noopener noreferrer" class="navbar-brand">Dropship</a>
+                    <a href="/" class="navbar-brand">Dropship</a>
                     <ul class="list-inline mb-0">
                         <li class="list-inline-item"><a class="nav-link">Guys</a></li>
                         <li class="list-inline-item"><a class="nav-link">Girls</a></li>

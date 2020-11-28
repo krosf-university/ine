@@ -13,25 +13,23 @@ class Product extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'description',
-        'imgurl',
-        'price',
-        'discountPercent',
-        'discountStart_at',
-        'discountEnd_at'
+        "name",
+        "description",
+        "imgurl",
+        "price",
+        "discountPercent",
+        "discountStart_at",
+        "discountEnd_at"
     ];
 
-    protected $dates = ['created_at', 'updated_at', 'discountStart_at', 'discountEnd_at',];
+    protected $dates = ["created_at", "updated_at", "discountStart_at", "discountEnd_at",];
 
-    // phpcs:ignore
-    public static function NewProducts()
+    public static function newProducts()
     {
         return Product::WhereDateBetween("updated_at", now(), "updated_at", now()->addWeek());
     }
 
-    // phpcs:ignore
-    public static function Offerings()
+    public static function offerings()
     {
         $sNow = now();
         return Product::WhereDateBetween("discountEnd_at", $sNow, "discountStart_at", $sNow);
@@ -40,6 +38,11 @@ class Product extends Model
     public function hasDiscount()
     {
         return $this->discountPercent && now()->isBetween($this->discountEnd_at, $this->discountStart_at);
+    }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class)->withDefault(["name" => "sin empresa"]);
     }
 
     /**
@@ -54,6 +57,6 @@ class Product extends Model
      */
     public function scopeWhereDateBetween($query, $sFieldNameFrom, $fromDate, $sFieldNameTo, $toDate)
     {
-        return $query->whereDate($sFieldNameFrom, '>=', $fromDate)->whereDate($sFieldNameTo, '<=', $toDate);
+        return $query->whereDate($sFieldNameFrom, ">=", $fromDate)->whereDate($sFieldNameTo, "<=", $toDate);
     }
 }
